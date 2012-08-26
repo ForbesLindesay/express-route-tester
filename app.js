@@ -5,7 +5,6 @@ $(function () {
         t = setTimeout(update, 500);
     });
     function update() {
-        console.log('updating');
         var keys = [];
         var regexp = pathRegexp($('#inputRoute').val(), keys);
         $('#regexp-display').html(regexp.toString());
