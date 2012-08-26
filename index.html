@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Express Route Tester</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" 
+      content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+          <h1>Express Route Tester</h1>
+          <div class="well">
+            <form class="form-horizontal">
+              <legend>Enter a route to test</legend>
+              <div class="control-group">
+                <label class="control-label" for="inputRoute">Route</label>
+                <div class="controls">
+                  <input type="text" id="inputRoute" 
+                    placeholder="/path/:key/">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="inputPath">Path</label>
+                <div class="controls">
+                  <input type="text" id="inputPath" 
+                    placeholder="/path/value/">
+                </div>
+              </div>
+            </form>
+          </div><!--/well-->
+        </div><!--/span-->
+      </div><!--/row-->
+      <div class="row-fluid">
+        <div class="span4">
+          <h2>RegExp</h2>
+          <pre><code id="regexp-display">/^foo/g</code></pre>
+        </div><!--/span-->
+        <div class="span4">
+          <h2>Keys</h2>
+          <div id="keys-display">
+          </div>
+        </div><!--/span-->
+        <div class="span4">
+          <h2>Results</h2>
+          <div class="alert alert-error is-not-match">
+            The path does not match the route
+          </div>
+          <div class="alert alert-success is-match">
+            The path matches the route
+          </div>
+          <div id="keys-results-display" class="is-match">
+          </div>
+        </div><!--/span-->
+      </div><!--/row-->
+    </div><!--/container-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
