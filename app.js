@@ -2,7 +2,7 @@ $(function () {
     var t;
     $('#inputRoute, #inputPath').keyup(function () {
         clearTimeout(t);
-        t = setTimeout(update, 500);
+        t = setTimeout(update, 200);
     });
     function update() {
         var keys = [];
