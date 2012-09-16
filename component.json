@@ -1,0 +1,7 @@
+{
+    "name": "ert",
+    "dependencies": {
+        "component/path-to-regexp": "*"
+    },
+    "scripts": ["index.js"]
+}
