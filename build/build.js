@@ -24,7 +24,7 @@ function require(p, parent, orig){
   if (!mod.exports) {
     mod.exports = {};
     mod.client = mod.component = true;
-    mod.call(mod.exports, mod, mod.exports, require.relative(path));
+    mod.call(this, mod, mod.exports, require.relative(path));
   }
 
   return mod.exports;
@@ -68,7 +68,7 @@ require.resolve = function(path){
     || require.modules[index] && index
     || require.modules[indexJSON] && indexJSON
     || require.modules[orig] && orig
-    || null;
+    || require.aliases[index];
 };
 
 /**
@@ -83,8 +83,7 @@ require.resolve = function(path){
 require.normalize = function(curr, path) {
   var segs = [];
 
-  // foo
-  if ('.' != path[0]) return path;
+  if ('.' != path.charAt(0)) return path;
 
   curr = curr.split('/');
   path = path.split('/');
@@ -138,14 +137,24 @@ require.relative = function(parent) {
   var p = require.normalize(parent, '..');
 
   /**
+   * lastIndexOf helper.
+   */
+
+  function lastIndexOf(arr, obj){
+    var i = arr.length;
+    while (i--) {
+      if (arr[i] === obj) return i;
+    }
+    return -1;
+  }
+
+  /**
    * The relative require() itself.
    */
 
   function fn(path){
     var orig = path;
     path = fn.resolve(path);
-    var alias = require.aliases[path + '/index.js'];
-    if (alias) path = alias;
     return require(path, parent, orig);
   }
 
@@ -157,9 +166,9 @@ require.relative = function(parent) {
     // resolve deps by returning
     // the dep in the nearest "deps"
     // directory
-    if ('.' != path[0]) {
+    if ('.' != path.charAt(0)) {
       var segs = parent.split('/');
-      var i = segs.lastIndexOf('deps') + 1;
+      var i = lastIndexOf(segs, 'deps') + 1;
       if (!i) i = 0;
       path = segs.slice(0, i + 1).join('/') + '/deps/' + path;
       return path;
@@ -230,14 +239,43 @@ function pathtoRegexp(path, keys, options) {
   return new RegExp('^' + path + '$', sensitive ? '' : 'i');
 };
 });
+require.register("MatthewMueller-debounce/index.js", function(module, exports, require){
+/**
+ * Debounce
+ *
+ * Returns a function, that, as long as it continues to be invoked, will not
+ * be triggered. The function will be called after it stops being called for
+ * N milliseconds. If `immediate` is passed, trigger the function on the
+ * leading edge, instead of the trailing.
+ *
+ * @param {Function} func
+ * @param {Number} wait
+ * @param {Boolean} immediate
+ * @return {Function}
+ */
+
+module.exports = function(func, wait, immediate) {
+  var timeout, result;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) result = func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) result = func.apply(context, args);
+    return result;
+  };
+};
+
+});
 require.register("ert/index.js", function(module, exports, require){
 $(function () {
     var pathRegexp = require('path-to-regexp');
-    var t;
-    $('#inputRoute, #inputPath').keyup(function () {
-        clearTimeout(t);
-        t = setTimeout(update, 200);
-    });
+    var debounce = require('debounce');
+    $('#inputRoute, #inputPath').keyup(debounce(update, 200));
     function update() {
         var keys = [];
         var regexp = pathRegexp($('#inputRoute').val(), keys);
@@ -269,5 +307,7 @@ $(function () {
 });
 });
 require.alias("component-path-to-regexp/index.js", "ert/deps/path-to-regexp/index.js");
-window.ert = require("ert");
+
+require.alias("MatthewMueller-debounce/index.js", "ert/deps/debounce/index.js");
+window.a = require("ert");
 })();

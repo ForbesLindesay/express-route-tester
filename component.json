@@ -1,7 +1,8 @@
 {
     "name": "ert",
     "dependencies": {
-        "component/path-to-regexp": "*"
+        "component/path-to-regexp": "*",
+        "MatthewMueller/debounce": "*"
     },
     "scripts": ["index.js"]
 }

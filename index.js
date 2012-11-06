@@ -1,10 +1,7 @@
 $(function () {
     var pathRegexp = require('path-to-regexp');
-    var t;
-    $('#inputRoute, #inputPath').keyup(function () {
-        clearTimeout(t);
-        t = setTimeout(update, 200);
-    });
+    var debounce = require('debounce');
+    $('#inputRoute, #inputPath').keyup(debounce(update, 200));
     function update() {
         var keys = [];
         var regexp = pathRegexp($('#inputRoute').val(), keys);
@@ -18,8 +15,7 @@ $(function () {
         }
 
         var path = $('#inputPath').val();
-        var isMatch = regexp.test(path);
-        if (isMatch) {
+        if (regexp.test(path)) {
             $('.is-not-match').hide();
             $('.is-match').show();
             var result = regexp.exec(path);
