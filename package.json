@@ -1,0 +1,23 @@
+{
+  "name": "express-route-tester",
+  "version": "0.0.0",
+  "description": "Demo app to easilly test express routes",
+  "keywords": [],
+  "dependencies": {
+    "debounce": "^1.0.0",
+    "path-to-regexp": "^1.0.1"
+  },
+  "devDependencies": {
+    "browserify": "^5.13.1",
+    "minifyify": "^4.4.0"
+  },
+  "scripts": {
+    "build": "browserify index.js -d -p [minifyify --compressPath . --map build.js.map --output build.js.map]  > build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ForbesLindesay/express-route-tester.git"
+  },
+  "author": "ForbesLindesay",
+  "license": "MIT"
+}
