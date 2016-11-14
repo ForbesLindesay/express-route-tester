@@ -6,7 +6,7 @@ var debounce = require('debounce');
 var _ = document.querySelector.bind(document);
 
 function escape(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');
+  return (str.length) ? str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;') : '';
 }
 function hide(selector) {
   var elements = document.querySelectorAll(selector);
