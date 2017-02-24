@@ -8,8 +8,8 @@
     "path-to-regexp": "^1.0.1"
   },
   "devDependencies": {
-    "browserify": "^5.13.1",
-    "minifyify": "^4.4.0"
+    "browserify": "^14.1.0",
+    "minifyify": "^7.3.5"
   },
   "scripts": {
     "build": "browserify index.js -d -p [minifyify --compressPath . --map build.js.map --output build.js.map]  > build.js"
