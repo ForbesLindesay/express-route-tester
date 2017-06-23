@@ -46,7 +46,7 @@ function updatePath() {
     var result = regexp.exec(path);
     _('#keys-results-display').innerHTML = '<dl class="dl-horizontal">' + keys.map(function (key, i) {
       return '<dt>' + escape(key.name) + '</dt><dd>' +
-      escape(result[i + 1]) + '</dd>';
+      (result[i + 1] ? escape(result[i + 1]) : '&nbsp;') + '</dd>';
     }).join('') + '</dl>';
   } else {
     show('.is-not-match');
