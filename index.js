@@ -1,11 +1,18 @@
 'use strict'
 
-var pathRegexp = require('path-to-regexp')
 var debounce = require('debounce')
+
+var pathRegexp
+var versions = {
+  '0.1.7': require('./versions/0.1.7'),
+  '1.7.0': require('./versions/1.7.0'),
+  '2.0.0': require('./versions/2.0.0')
+}
 
 var _ = document.querySelector.bind(document)
 
 function escape (str) {
+  str = '' + str
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;') // eslint-disable-line no-useless-escape
 }
 function hide (selector) {
@@ -21,17 +28,53 @@ function show (selector) {
   }
 }
 
+_('#inputStrict').addEventListener('change', updateOptions, false)
+_('#inputSensitive').addEventListener('change', updateOptions, false)
+_('#inputEnd').addEventListener('change', updateOptions, false)
+
+_('#inputVersion').addEventListener('change', setVersion, false)
 _('#inputRoute').addEventListener('input', debounce(update, 100), false)
 _('#inputPath').addEventListener('input', debounce(updatePath, 100), false)
 
+var opts = {
+  strict: false,
+  sensitive: false,
+  end: true
+}
+function updateOptions (e) {
+  switch (e.target.id) {
+    case 'inputStrict':
+      opts.strict = e.target.checked
+      break
+    case 'inputSensitive':
+      opts.sensitive = e.target.checked
+      break
+    case 'inputEnd':
+      opts.end = e.target.checked
+      break
+  }
+  update()
+}
+
 function setVersion () {
-  console.log()
+  pathRegexp = versions[_('#inputVersion').value] || pathRegexp
+  update()
 }
 
 var keys, regexp
 function update () {
   keys = []
-  regexp = pathRegexp(_('#inputRoute').value, keys)
+  try {
+    regexp = pathRegexp(_('#inputRoute').value, keys, opts)
+  } catch (e) {
+    show('.is-error')
+    hide('.is-not-match')
+    hide('.is-match')
+    _('#keys-results-display').innerHTML = '<pre><code>' + e.message + '</code></pre>'
+    return
+  }
+  _('#keys-results-display').innerHTML = ''
+  hide('.is-error')
   _('#regexp-display').textContent = regexp.toString()
   if (keys.length) {
     _('#keys-display').innerHTML = '<ol>' + keys.map(function wrap (key) {
@@ -57,4 +100,4 @@ function updatePath () {
     hide('.is-match')
   }
 }
-update()
+setVersion()
