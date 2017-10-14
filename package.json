@@ -9,7 +9,8 @@
   },
   "devDependencies": {
     "browserify": "^9.0.3",
-    "minifyify": "^6.3.1"
+    "minifyify": "^6.3.1",
+    "standard": "^10.0.3"
   },
   "scripts": {
     "build": "browserify index.js -d -p [minifyify --compressPath . --map build.js.map --output build.js.map] > build.js"
