@@ -1,7 +1,7 @@
 {
   "name": "express-route-tester",
   "version": "0.0.0",
-  "description": "Demo app to easilly test express routes",
+  "description": "Demo app to easily test express routes",
   "keywords": [],
   "dependencies": {
     "debounce": "^1.0.0",
