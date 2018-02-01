@@ -4,15 +4,21 @@
   "description": "Demo app to easily test express routes",
   "keywords": [],
   "dependencies": {
-    "debounce": "^1.0.0",
-    "path-to-regexp": "^1.0.1"
+    "debounce": "^1.0.0"
   },
   "devDependencies": {
-    "browserify": "^9.0.3",
-    "minifyify": "^6.3.1"
+    "browserify": "^14.4.0",
+    "minifyify": "^6.3.1",
+    "standard": "^10.0.3",
+    "watchify": "^3.9.0"
   },
   "scripts": {
-    "build": "browserify index.js -d -p [minifyify --compressPath . --map build.js.map --output build.js.map] > build.js"
+    "build": "npm run i-0.1.7 && npm run i-1.7.0 && npm run i-2.0.0 && npm run compile",
+    "i-0.1.7": "cd versions/0.1.7 && npm i",
+    "i-1.7.0": "cd versions/1.7.0 && npm i",
+    "i-2.0.0": "cd versions/2.0.0 && npm i",
+    "compile": "browserify index.js -d -p [minifyify --compressPath . --map build.js.map --output build.js.map] > build.js",
+    "dev": "watchify -v --watch -d index.js -o build.js"
   },
   "repository": {
     "type": "git",

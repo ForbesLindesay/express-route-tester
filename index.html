@@ -13,10 +13,37 @@
         <div class="span12">
           <h1>Express Route Tester</h1>
           <iframe class="github-btn"
-            src="http://ghbtns.com/github-btn.html?user=forbeslindesay&amp;repo=express-route-tester&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            src="https://ghbtns.com/github-btn.html?user=forbeslindesay&amp;repo=express-route-tester&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
           <div class="well">
             <form class="form-horizontal">
               <legend>Enter a route to test</legend>
+              <div class="control-group">
+                <label class="control-label" for="inputRoute">Package Version</label>
+                <div class="controls">
+                  <select id="inputVersion">
+                    <option value="0.1.7">0.1.7 (express 4.x)</option>
+                    <option value="1.7.0">1.7.0</option>
+                    <option value="2.0.0">2.0.0</option>
+                  </select>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="inputRoute">Options</label>
+                <div class="controls">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" id="inputStrict">
+                    Strict
+                  </label>
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" id="inputSensitive">
+                    Sensitive
+                  </label>
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" id="inputEnd" checked>
+                    End
+                  </label>
+                </div>
+              </div>
               <div class="control-group">
                 <label class="control-label" for="inputRoute">Route</label>
                 <div class="controls">
@@ -58,7 +85,10 @@
           <p class="is-match">
             And the keys have the following values:
           </p>
-          <div id="keys-results-display" class="is-match">
+          <p class="alert alert-error is-error">
+            Invalid path:
+          </p>
+          <div id="keys-results-display">
           </div>
         </div><!--/span-->
       </div><!--/row-->
